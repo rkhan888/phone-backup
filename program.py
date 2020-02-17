@@ -1,14 +1,14 @@
 from shutil import copyfile
 
-def copyFile():
+def copyFile(phoneFileLoc, localFileLoc, diffFileLoc, src, dest):
 
     diff = []
     filePresent = False
 
-    with open('D:/Phone Backups/PhoneFileNames.txt') as f:
+    with open(phoneFileLoc) as f:
         phoneFilesList = f.read().splitlines()
 
-    with open('D:/Phone Backups/LocalFileNames.txt') as f:
+    with open(localFileLoc) as f:
         localFilesList = f.read().splitlines()
 
 
@@ -30,20 +30,34 @@ def copyFile():
         filePresent = False
 
     # create file of new file names
-    with open('D:/Phone Backups/diffFile.txt', 'w') as filehandle:
+    with open(diffFileLoc, 'w') as filehandle:
         for listitem in diff:
             filehandle.write('%s\n' % listitem)
 
     # copy new files
     for fileName in diff:
         if len(fileName) !=0:
-            copyfile("D:/Phone Backups/temp/" + fileName, "D:/Phone Backups/temp2/" + fileName)
+            copyfile(src + fileName, dest + fileName)
 
-
-
+    # update the local file manually by copying all names in diff file to the local file
 
 
 
 if __name__ == '__main__':
     print("prgrm running")
-    copyFile()
+
+    dcimLocalFileNames = "LocalFileNames.txt"
+    dcimPhoneFileNames = "PhoneFileNames.txt"
+    wtsappLocalImgFiles = "LocalFilesWhatsappImgs.txt"
+    wtsappPhoneImgFiles = "PhoneFilesWhatsappImgs.txt"
+    wtsappLocalVdoFiles = "LocalFilesWhatsappVdos.txt"
+    wtsappPhoneVdoFiles = "PhoneFilesWhatsappVdos.txt"
+
+    wtsappImgDiff = "wtsappImgDiff.txt"
+    wtsappVdoDiff = "wtsappVdoDiff.txt"
+
+    wtsappTempSrc = "D:/Phone Backups/s10e Rumman/WhatsApp/temp/"
+    wtsappImgDest = "D:/Phone Backups/s10e Rumman/WhatsApp/Media/WhatsApp Images/"
+    wtsappVdoDest = "D:/Phone Backups/s10e Rumman/WhatsApp/Media/WhatsApp Video/"
+
+    copyFile(wtsappPhoneVdoFiles, wtsappLocalVdoFiles, wtsappVdoDiff, wtsappTempSrc, wtsappVdoDest)
